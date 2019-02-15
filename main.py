@@ -7,7 +7,7 @@ import os
 
 clickPos = []
 offset_x = 760
-offset_y = 820
+offset_y = 302
 
 def getTiles(image):
     row = 3
@@ -23,7 +23,7 @@ def getTiles(image):
             x = 100 * col
             col -= 1
             box = (x, y, width+x, height+y)
-            clickPos.append([x+50, y-50])
+            clickPos.append([x+5, y+5])
             board.append(image.crop(box))
     return board
 
@@ -39,6 +39,17 @@ def checkBlack(gameBoard):
         i+=1
     return pos
 
+def getFirstBlack(board):
+    i=0
+    for image in board:
+        pix = image.load()
+        pix = pix[20,20]
+        if(pix[0] < 30):
+            print("FOUND BLACK AT POS: " + str(i) )
+            return i
+        i += 1
+
+
 
 def grabScreenShot():
     im = ImageGrab.grab(bbox=(750, 280, 1160, 910))  # X1,Y1,X2,Y2
@@ -53,14 +64,13 @@ def convertPos(pos):
 def click(x,y):
     os.system("xdotool mousemove %s %s " % (str(x + offset_x),str(y +offset_y)))
     print("click at %s %s " % (str(x + offset_x),str(y +offset_y)))
+    sleep(1)
     os.system("xdotool click 1")
 
 def clearBoard(board):
 
-    black_keys_pos = checkBlack(board)
+    while(true):
 
-    for key in black_keys_pos:
-        click(clickPos[key][0],clickPos[key][1])
 
 
 
@@ -69,6 +79,7 @@ def clearBoard(board):
 def main():
     sleep(5)
     board = getTiles(grabScreenShot())
+    print(clickPos)
     clearBoard(board)
 
 
