@@ -1,1 +1,1 @@
-Uses Computer Vision to play Piano Tiles be recognizing Black squares
+Uses Computer Vision to play Piano Tiles by recognizing Black squares
